@@ -3,6 +3,7 @@ const express = require("express");
 const db = require("../data/db-config.js");
 const projects = require("./projects-model.js");
 const resource = require("../resources/resource-model.js");
+const task = require('../tasks/tasks-model')
 
 const router = express.Router();
 
@@ -46,12 +47,42 @@ router.post('/', (req, res) => {
 
 router.post('/:id/resource', (req, res) => {
     resource.insert({name: req.body.name, description: req.body.description, project_id: req.params.id})
-    .then(project => {
-        res.status(201).json(project)
-    })
-    .catch(err => {
-        res.status(500).json({ message: "Failed to POST project", error: err, request: req.body });
-    });
+        .then(project => {
+            res.status(201).json(project)
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Failed to POST project", error: err, request: req.body });
+        });
 });
+
+router.get('/:id/resource', (req, res) => {
+    resource.findById(req.params.id)
+        .then(project => {
+            res.status(201).json(project)
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Failed to GET project", error: err });
+        });
+});
+
+router.post('/:id/task', (req, res) => {
+    task.insert({description: req.body.description, notes: req.body.notes, completed: req.body.completed, project_id: req.params.id})
+        .then(tasks => {
+            res.status(201).json(tasks)
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Failed to POST project", error: err, request: req.body });
+        });
+});
+router.get('/:id/task', (req, res) => {
+    task.findById(req.params.id)
+        .then(project => {
+            res.status(201).json(project)
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Failed to GET project", error: err });
+        });
+});
+
 module.exports = router;
   

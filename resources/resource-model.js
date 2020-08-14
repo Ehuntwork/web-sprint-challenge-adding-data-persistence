@@ -11,13 +11,16 @@ function find() {
 }
 
 function findById(params) {
-    return db("resource").where(id = params).first();
+    return db("resource").where({project_id: params});
 }
 
-function insert(project) {
+function insert(resource) {
     return (
         db("resource")
-            .insert(project, 'id')
-            .then(([id]) => get(id))
+            .insert(resource, "id")
+            .then(ids => {
+                console.log(ids)
+                return ids
+            })
     );
 }

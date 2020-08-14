@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
     tasks.find()
     .then(task => {
-      res.status(200).json(project);
+      res.status(200).json(task);
     })
     .catch(error => {
       res.status(500).json(error);

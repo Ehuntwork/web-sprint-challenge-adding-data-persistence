@@ -1,5 +1,5 @@
 
-exports.up = function(knex) {
+exports.up = function(knex, Promise) {
     return knex.schema
         .createTable("projects", function(projects) {
             projects.increments("id");
@@ -41,10 +41,10 @@ exports.up = function(knex) {
         });
 };
 
-exports.down = function(knex) {
+exports.down = function(knex, Promise) {
     return knex.schema
-        .dropTableIfExists("projects")
+        .dropTableIfExists("task")
         .dropTableIfExists("resource")
-        .dropTableIfExists("task");
+        .dropTableIfExists("projects");
 };
 
